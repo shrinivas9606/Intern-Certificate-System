@@ -71,7 +71,7 @@
 import React, { useState } from "react";
 import { ref, push } from "firebase/database";
 import { database } from "../firebase";
-import QRCode from "qrcode.react";
+import { default as QRCode } from "qrcode.react";
 import emailjs from "@emailjs/browser";
 
 export default function AddCertificate() {
