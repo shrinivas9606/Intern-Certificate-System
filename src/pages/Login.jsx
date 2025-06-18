@@ -33,8 +33,9 @@
 //   );
 // }
 
-// ✅ FILE: pages/Login.jsx
-import React, { useState } from "react";
+
+
+import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -60,7 +61,7 @@ export default function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Login successful — wait for useAuthState to detect user
+      // wait for useEffect to redirect
     } catch (err) {
       setLoggingIn(false);
       if (err.code === "auth/user-not-found") {
@@ -73,10 +74,12 @@ export default function Login() {
     }
   };
 
-  // ✅ If user is logged in, navigate to /add
-  if (user && !loading) {
-    navigate("/add");
-  }
+  // ✅ Redirect only after login and not while loading
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/add");
+    }
+  }, [user, loading]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
