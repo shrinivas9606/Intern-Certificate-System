@@ -5,6 +5,7 @@ import EditCertificates from "./pages/EditCertificates";
 import VerifyCertificate from "./pages/VerifyCertificate";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
+import CreateAdmin from "./pages/CreateAdmin";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/add" element={<PrivateRoute><AddCertificate /></PrivateRoute>} />
         <Route path="/edit" element={<PrivateRoute><EditCertificates /></PrivateRoute>} />
         <Route path="*" element={<Login />} />
+        <Route path="/create-admin" element={<CreateAdmin />} />
       </Routes>
     </BrowserRouter>
   );

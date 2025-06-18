@@ -73,6 +73,7 @@ import { ref, push } from "firebase/database";
 import { database } from "../firebase";
 import { QRCodeCanvas } from "qrcode.react";
 import emailjs from "@emailjs/browser";
+import Navbar from "../components/Navbar";
 
 export default function AddCertificate() {
   const [intern, setIntern] = useState({ name: "", domain: "", duration: "" });
@@ -113,6 +114,8 @@ export default function AddCertificate() {
   return (
     <div className="p-4 max-w-lg mx-auto">
       <h2 className="text-xl font-bold mb-4">Generate Certificate</h2>
+      <Navbar />
+      {/* Rest of your page */}
       <form onSubmit={handleSubmit} className="space-y-3">
         <input type="text" name="name" onChange={handleChange} placeholder="Intern Name" className="w-full border p-2" required />
         <input type="text" name="domain" onChange={handleChange} placeholder="Internship Domain" className="w-full border p-2" required />
