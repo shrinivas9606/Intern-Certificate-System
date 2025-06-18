@@ -71,7 +71,7 @@
 import React, { useState } from "react";
 import { ref, push } from "firebase/database";
 import { database } from "../firebase";
-import { default as QRCode } from "qrcode.react";
+import { QRCodeCanvas } from "qrcode.react";
 import emailjs from "@emailjs/browser";
 
 export default function AddCertificate() {
@@ -121,7 +121,7 @@ export default function AddCertificate() {
       </form>
       {submitted && (
         <div className="mt-6 text-center">
-          <QRCode value={qrURL} size={160} />
+          <QRCodeCanvas value={url} size={160} />
           <a href={qrURL} target="_blank" rel="noreferrer" className="text-blue-600 underline">{qrURL}</a>
         </div>
       )}
