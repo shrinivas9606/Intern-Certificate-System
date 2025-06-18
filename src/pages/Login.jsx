@@ -33,31 +33,36 @@
 //   );
 // }
 
-
 // ✅ FILE: pages/Login.jsx
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loggingIn, setLoggingIn] = useState(false);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    setError(""); // clear previous errors
+    setError("");
+    setLoggingIn(true);
 
     if (!email || !password) {
       setError("⚠️ Please enter both email and password.");
+      setLoggingIn(false);
       return;
     }
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/add"); // or your default protected page
+      // Login successful — wait for useAuthState to detect user
     } catch (err) {
+      setLoggingIn(false);
       if (err.code === "auth/user-not-found") {
         setError("❌ User does not exist.");
       } else if (err.code === "auth/wrong-password") {
@@ -68,12 +73,18 @@ export default function Login() {
     }
   };
 
+  // ✅ If user is logged in, navigate to /add
+  if (user && !loading) {
+    navigate("/add");
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="p-8 bg-gray-800 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
 
         {error && <p className="text-red-400 mb-2">{error}</p>}
+        {loggingIn && <p className="text-yellow-400 mb-2">Checking access...</p>}
 
         <input
           type="email"
