@@ -26,12 +26,12 @@ export default function Login() {
     }
   };
 
-  // ✅ Automatically redirect after login is confirmed
   useEffect(() => {
-    if (user && !loading) {
-      navigate("/add");
-    }
-  }, [user, loading, navigate]);
+  // Only redirect if login was just attempted and user is set
+  if (user && !loading && loggingIn) {
+    navigate("/add");
+  }
+}, [user, loading, loggingIn]);
 
   return (
     <div className="max-w-sm mx-auto p-6">
